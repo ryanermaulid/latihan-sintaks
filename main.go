@@ -2,6 +2,25 @@ package main
 
 import "fmt"
 
+// Menukar nilai dua integer melalui pointer
+func swap(a, b *int) {
+	*a, *b = *b, *a
+}
+
+// Menambahkan item baru ke slice lewat pointer
+func updateSlice(s *[]string, newItem string) {
+	*s = append(*s, newItem)
+}
+
+// Pembanding pass by value vs pointer
+func ubahValue(x int) {
+	x = 999
+}
+
+func ubahPointer(x *int) {
+	*x = 999
+}
+
 func main() {
 
 	// Variabel & Struktur Data
@@ -42,4 +61,27 @@ func main() {
 	for k, v := range nilaiMahasiswa {
 		fmt.Printf("- %s: %d\n", k, v)
 	}
+
+	// pointer
+	
+	fmt.Println("\n=== Pointer ===")
+
+	// a. Demo swap
+	x, y := 10, 20
+	fmt.Printf("Sebelum swap: x = %d, y = %d\n", x, y)
+	swap(&x, &y)
+	fmt.Printf("Setelah swap : x = %d, y = %d\n", x, y)
+
+	// b. Demo updateSlice
+	listBuah := []string{"Apel", "Mangga"}
+	fmt.Println("Sebelum updateSlice:", listBuah)
+	updateSlice(&listBuah, "Jeruk")
+	fmt.Println("Setelah updateSlice :", listBuah)
+
+	// c. Perbandingan Pass by Value vs Pass by Pointer
+	angka := 50
+	ubahValue(angka)
+	fmt.Println("Setelah pass by value  :", angka) // tetap 50
+	ubahPointer(&angka)
+	fmt.Println("Setelah pass by pointer:", angka) // berubah jadi 999
 }
