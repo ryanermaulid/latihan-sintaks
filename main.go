@@ -2,6 +2,36 @@ package main
 
 import "fmt"
 
+// Struct Student & Method
+type Student struct {
+	ID       int
+	Name     string
+	Grade    float64
+	IsActive bool
+}
+
+// Value receiver (hanya baca data)
+func (s Student) GetInfo() string {
+	status := "Non-Aktif"
+	if s.IsActive {
+		status = "Aktif"
+	}
+	return fmt.Sprintf("ID: %d | Nama: %-8s | Nilai: %.2f | Status: %s", s.ID, s.Name, s.Grade, status)
+}
+
+// Pointer receiver (mengubah data pada struct asli)
+func (s *Student) UpdateGrade(grade float64) {
+	s.Grade = grade
+}
+
+func (s *Student) Activate() {
+	s.IsActive = true
+}
+
+func (s *Student) Deactivate() {
+	s.IsActive = false
+}
+
 // Menukar nilai dua integer melalui pointer
 func swap(a, b *int) {
 	*a, *b = *b, *a
@@ -63,7 +93,7 @@ func main() {
 	}
 
 	// pointer
-	
+
 	fmt.Println("\n=== Pointer ===")
 
 	// a. Demo swap
@@ -81,7 +111,21 @@ func main() {
 	// c. Perbandingan Pass by Value vs Pass by Pointer
 	angka := 50
 	ubahValue(angka)
-	fmt.Println("Setelah pass by value  :", angka) // tetap 50
+	fmt.Println("Setelah pass by value  :", angka) 
 	ubahPointer(&angka)
-	fmt.Println("Setelah pass by pointer:", angka) // berubah jadi 999
+	fmt.Println("Setelah pass by pointer:", angka)
+
+	// Struct Student
+
+	fmt.Println("\n=== Struct Student ===")
+
+	mhs := Student{ID: 1, Name: "Ryan", Grade: 80.0, IsActive: false}
+	fmt.Println("Kondisi Awal       :", mhs.GetInfo())
+
+	mhs.Activate()
+	mhs.UpdateGrade(92.5)
+	fmt.Println("Setelah Update     :", mhs.GetInfo())
+
+	mhs.Deactivate()
+	fmt.Println("Setelah Deactivate :", mhs.GetInfo())
 }
